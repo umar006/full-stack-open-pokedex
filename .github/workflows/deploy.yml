@@ -33,6 +33,7 @@ jobs:
       - name: Install fly cli
         uses: superfly/flyctl-actions@1.4
       - name: Deploy to fly.io
+        if: ${{ github.event_name == "push"}}
         run: |
           flyctl deploy --remote-only
         env:
