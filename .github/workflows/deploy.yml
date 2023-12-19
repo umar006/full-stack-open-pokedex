@@ -30,6 +30,7 @@ jobs:
         with:
           build: npm run build
           start: npm run start-prod
+          
       - name: Install fly cli
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to fly.io
@@ -52,4 +53,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+          
+      - name: Notification Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          details: Sukses bro...!!!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Notification Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+          severity: error
+          details: Gagal bro...!!!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Notification Cancelled
+        uses: rjstone/discord-webhook-notify@v1
+        if: cancelled()
+        with:
+          severity: warn
+          details: Batal bro...!!!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       
