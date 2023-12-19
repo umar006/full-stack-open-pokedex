@@ -54,7 +54,7 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           
       - name: Install fly cli
-        uses: superfly/flyctl-actions@1.4
+        uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to fly.io
         if: ${{ github.event_name == 'push' && contains('#skip', github.event.head_commit.message) }}
         run: |
